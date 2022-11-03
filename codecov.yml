@@ -1,0 +1,37 @@
+coverage:
+  precision: 2
+  range: 75...95
+  round: nearest
+  status:
+    project:
+      default:
+        target: 80%
+        threshold: 0%
+        only_pulls: true
+        branches:
+          - main
+        flags:
+          - unit
+        paths:
+          - "!**/*"
+    patch:
+      default:
+        target: 80%
+        threshold: 0%
+        only_pulls: true
+        branches:
+          - main
+        flags:
+          - unit
+        paths:
+          - "!**/*o"
+ignore:
+  - (?s:.*/main\.go.*)\Z
+  - (?s:.*/mock_[^\/]+\.go.*)\Z
+  - (?s:.*/[^\/]+_mock\.go.*)\Z
+  - (?s:.*/[^\/]+_test\.go.*)\Z
+  - (?s:.*/component\-tests/.*/[^\/]+\.go.*)\Z
+  - (?s:.*/test/component/.*/[^\/]+\.go.*)\Z
+  - (?s:.*/[^\/]+\.pb\.go.*)\Z
+  - (?s:.*/[^\/]+\.pb\.validate\.go.*)\Z
+  - (?s:.*/[^\/]+\.pb\.grpc\.go.*)\Z
