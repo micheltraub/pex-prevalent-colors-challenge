@@ -1,5 +1,6 @@
 # PEX: Prevalent Colors Challenge
-[![Build](https://github.com/micheltraub/pex-prevalent-colors-challenge/actions/workflows/go.yml/badge.svg?branch=main)](https://github.com/micheltraub/pex-prevalent-colors-challenge/actions/workflows/go.yml)
+[![Go](https://github.com/micheltraub/pex-prevalent-colors-challenge/actions/workflows/go.yml/badge.svg)](https://github.com/micheltraub/pex-prevalent-colors-challenge/actions/workflows/go.yml)
+[![codecov](https://codecov.io/gh/micheltraub/pex-prevalent-colors-challenge/branch/main/graph/badge.svg?token=TDYEJLZMR2)](https://codecov.io/gh/micheltraub/pex-prevalent-colors-challenge)
 
 ---
 - [PEX: Prevalent Colors Challenge](#pex-prevalent-colors-challenge)
