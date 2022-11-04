@@ -27,7 +27,10 @@ func persistToCsvFile(csvCh chan []string, env *models.Env, wg2 *sync.WaitGroup)
 		csvLine := c
 		wg2.Add(1)
 		go func() {
-			csv.AppendToCsvFile(env.OUTPUT_PATH+env.CSV_OUTPUT_FILENAME, csvLine)
+			err := csv.AppendToCsvFile(env.OUTPUT_PATH+env.CSV_OUTPUT_FILENAME, csvLine)
+			if err != nil {
+				log.Println(err)
+			}
 			wg2.Done()
 		}()
 	}
