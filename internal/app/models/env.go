@@ -8,15 +8,17 @@ import (
 )
 
 type Env struct {
+	CPU_PPROF_FILENAME     string
+	CSV_OUTPUT_FILENAME    string
+	ENABLE_CPU_MONITOR     string
+	ENABLE_MEMORY_MONITOR  string
+	GENERATE_HTML          string
+	HTML_OUTPUT_FILENAME   string
+	HTML_TEMPLATE_FILENAME string
 	INPUT_FILENAME         string
 	INPUT_PATH             string
-	CSV_OUTPUT_FILENAME    string
-	HTML_OUTPUT_FILENAME   string
 	OUTPUT_PATH            string
-	HTML_TEMPLATE_FILENAME string
-	ENABLE_CPU_MONITOR     string
-	CPU_PPROF_FILENAME     string
-	ENABLE_MEMORY_MONITOR  string
+	PREVALENT_MODE         string
 	REDUCE_IMAGES          string
 }
 
@@ -38,5 +40,7 @@ func NewEnv() *Env {
 		CPU_PPROF_FILENAME:     os.Getenv("CPU_PPROF_FILENAME"),
 		ENABLE_MEMORY_MONITOR:  os.Getenv("ENABLE_MEMORY_MONITOR"),
 		REDUCE_IMAGES:          os.Getenv("REDUCE_IMAGES"),
+		PREVALENT_MODE:         os.Getenv("PREVALENT_MODE"),
+		GENERATE_HTML:          os.Getenv("GENERATE_HTML"),
 	}
 }

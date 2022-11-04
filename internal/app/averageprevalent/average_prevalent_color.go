@@ -13,14 +13,16 @@ type averagePrevalentColor struct {
 	Color1 string
 	Color2 string
 	Color3 string
+	Reduce bool
 }
 
-func NewAveragePrevalentColor(url string, color1 string, color2 string, color3 string) models.PrevalentColor {
+func NewAveragePrevalentColor(url string, color1 string, color2 string, color3 string, reduce bool) models.PrevalentColor {
 	return &averagePrevalentColor{
 		URL:    url,
 		Color1: color1,
 		Color2: color2,
 		Color3: color3,
+		Reduce: reduce,
 	}
 }
 
