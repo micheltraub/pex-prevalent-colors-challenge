@@ -150,11 +150,20 @@ Processing `test/data/input1000.txt`:
 ---
 
 ## Improvements
-The program was created to 
-- Improve Error handler: create error types
-- Limit the number of goroutines using things like runtime.NumCPU() and concurrency best practices (https://go.dev/blog/pipelines)
-- Improve test coverage
+As I am new in GO I had to learn many things, so I didnt had the time to do all that I wanted to do. So my goal was to apply some concepts that I know but are important but there are many things that are incomplete or that could be improved. Here is a list of things that I would do:
+
 - Implement the average prevalent color calcuation using KMeans Clustering
+- Limit the number of goroutines using things like runtime.NumCPU() and concurrency best practices (https://go.dev/blog/pipelines)
+- Improve Error handler: create error types
+- Add log level management
+- Improve test coverage
+- Reorganize my code following go project structure and som refactor using best practices (double checking naming conventions, dependecy injections, apply some patterns, etc...). Some references:
+    - https://github.com/golang-standards/project-layout
+    - https://golangbyexample.com/all-design-patterns-golang/
+    - https://go.dev/blog/pipelines
+    - https://go.dev/doc/diagnostics    
+- Use containers with limited resources to test
+- The challenge was to use a CSV file as output, but in the future could use a database as output
 
 ---
 ## Extra
