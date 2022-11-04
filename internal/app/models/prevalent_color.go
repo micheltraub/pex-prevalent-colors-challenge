@@ -7,4 +7,5 @@ type PrevalentColor interface {
 	CalculatePrevalentColors(image.Image) error
 	GetCalculatedPrevalentColors() (string, string, string)
 	GetUrl() string
+	SortTopColors(map[string]int, string)
 }

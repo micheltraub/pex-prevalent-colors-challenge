@@ -39,9 +39,12 @@ func (accurate *averagePrevalentColor) CalculatePrevalentColors(img image.Image)
 	log.Println("⚠️ Not implemented yet")
 	return nil
 }
+func (accurate *averagePrevalentColor) GetUrl() string {
+	return accurate.URL
+}
 func (accurate *averagePrevalentColor) GetCalculatedPrevalentColors() (string, string, string) {
 	return accurate.Color1, accurate.Color2, accurate.Color3
 }
-func (accurate *averagePrevalentColor) GetUrl() string {
-	return accurate.URL
+func (accurate *averagePrevalentColor) SortTopColors(m map[string]int, s string) {
+	log.Println("⚠️ Not implemented yet")
 }
