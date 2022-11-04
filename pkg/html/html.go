@@ -6,6 +6,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"html/template"
+	"log"
 	"os"
 )
 
@@ -53,7 +54,7 @@ func CreateHtmlFromCsv(csvPath string, htmlTemplatePath string, htmlPath string)
 		return fmt.Errorf("🚧🚨 Could not create HTML file (%s): %s", htmlPath, err)
 	}
 	w := bufio.NewWriter(f)
-	_, err = w.WriteString(string(processed.Bytes()))
+	_, err = w.WriteString(processed.String())
 	if err != nil {
 		return fmt.Errorf("🚧🚨 Could not write to bufio HTML file (%s): %s", htmlPath, err)
 	}
@@ -62,6 +63,7 @@ func CreateHtmlFromCsv(csvPath string, htmlTemplatePath string, htmlPath string)
 		return fmt.Errorf("🚧🚨 Could not write buffered data from HTML file (%s): %s", htmlPath, err)
 	}
 
+	log.Printf("HTML file saved :%s \n", htmlPath)
 	return nil
 }
 

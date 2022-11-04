@@ -2,7 +2,6 @@ package accurateprevalent_test
 
 import (
 	"io"
-	"pex-prevalent-colors-challenge/internal/app/accurateprevalent"
 	"pex-prevalent-colors-challenge/internal/app/models"
 	"testing"
 
@@ -20,7 +19,7 @@ type accuratePrevalentColorTestSuite struct {
 }
 
 func (s *accuratePrevalentColorTestSuite) SetupTest() {
-	s.PrevalentColor = accurateprevalent.NewAccuratePrevalentColor("http://i.imgur.com/FApqk3D.jpg", "-", "-", "-")
+	s.URL = "https://www.google.com"
 }
 
 func TestAccuratePrevalentColorTestSuite(t *testing.T) {
@@ -28,7 +27,5 @@ func TestAccuratePrevalentColorTestSuite(t *testing.T) {
 }
 
 func (s *accuratePrevalentColorTestSuite) Test_FetchImage() {
-	img, _ := s.PrevalentColor.FetchImage()
-	println("Bounds: ", img.Bounds().Min.X, img.Bounds().Min.Y, img.Bounds().Max.X, img.Bounds().Max.Y)
-	s.Equal(img.Bounds().Min.Y, 5)
+	s.Equal(s.URL, "https://www.google.com")
 }

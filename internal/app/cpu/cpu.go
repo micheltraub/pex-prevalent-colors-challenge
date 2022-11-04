@@ -5,7 +5,7 @@ import (
 	"runtime/pprof"
 )
 
-func MonitorCPU(cpuPprofFilename string) {
+func StartMonitorCPU(cpuPprofFilename string) *os.File {
 	cpufile, err := os.Create(cpuPprofFilename)
 	if err != nil {
 		panic(err)
@@ -14,6 +14,9 @@ func MonitorCPU(cpuPprofFilename string) {
 	if err != nil {
 		panic(err)
 	}
-	defer cpufile.Close()
-	defer pprof.StopCPUProfile()
+	return cpufile
+}
+
+func StopMonitorCPU() {
+	pprof.StopCPUProfile()
 }

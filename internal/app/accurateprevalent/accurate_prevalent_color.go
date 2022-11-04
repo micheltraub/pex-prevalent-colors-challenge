@@ -17,14 +17,16 @@ type AccuratePrevalentColor struct {
 	Color1 string
 	Color2 string
 	Color3 string
+	Reduce bool
 }
 
-func NewAccuratePrevalentColor(url string, color1 string, color2 string, color3 string) models.PrevalentColor {
+func NewAccuratePrevalentColor(url string, color1 string, color2 string, color3 string, reduce bool) models.PrevalentColor {
 	return &AccuratePrevalentColor{
 		URL:    url,
 		Color1: color1,
 		Color2: color2,
 		Color3: color3,
+		Reduce: reduce,
 	}
 }
 
@@ -38,7 +40,6 @@ func (accurate *AccuratePrevalentColor) FetchImage() (image.Image, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	img, filename, err := image.Decode(response.Body)
 	if err != nil {
 		log.Println("🚧🚨 Error decoding image: " + err.Error())
@@ -52,8 +53,10 @@ func (accurate *AccuratePrevalentColor) FetchImage() (image.Image, error) {
 func (accurate *AccuratePrevalentColor) CalculatePrevalentColors(img image.Image) error {
 	log.Println("🧑‍💻 Calculating prevalent color")
 	//Reducing the size of the image with interpolation makes the pixels counting faster,
-	//consuming less memory but less accurate
-	img = resize.Resize(uint(img.Bounds().Dx())/5, 0, img, resize.Lanczos3)
+	//consuming less memory but less accurate. Diving by 5 the width andk eeping the ratio
+	if accurate.Reduce {
+		img = resize.Resize(uint(img.Bounds().Dx())/5, 0, img, resize.Lanczos3)
+	}
 	//count the pixels by hex code in map
 	m := make(map[string]int)
 	m["-"] = -1
