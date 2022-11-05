@@ -1,0 +1,26 @@
+{{define "result" -}}
+<!DOCTYPE html>
+<html>    
+    <head>
+		<title>Colors Results</title>		
+	</head>
+    <body>
+        <h1>Results</h1>
+        <p>Those are the images and the 3 prevalent colors:</p>
+        {{range $index, $item:=.}}
+        <div style="width: 500px;max-width: 500px; margin:auto;">
+            <h3>Image {{$index}} </h3>
+            <img src="{{$item.Img}}" alt="" width="400" style="display: block;margin: auto;">
+            <div style="text-align: center; border: 3px solid black; margin:5px">                            
+                <p>First prevalent color: {{$item.Color1}}</p>
+                <p style="background-color:{{$item.Color1}};color:{{$item.Color1}};border: 1px solid black;">_</p>
+                <p>Second prevalent color: {{$item.Color2}}</p>
+                <p style="background-color:{{$item.Color2}};color:{{$item.Color2}};border: 1px solid black;">_</p>
+                <p>Third prevalent color: {{$item.Color3}}</p>
+                <p style="background-color:{{$item.Color3}};color:{{$item.Color3}};border: 1px solid black;">_</p>
+            </div>
+        </div>
+        {{end}}
+    </body>
+</html>
+{{end}}
