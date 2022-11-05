@@ -22,7 +22,6 @@ func Run(env *models.Env) {
 }
 
 func persistToCsvFile(csvCh chan []string, env *models.Env, wg2 *sync.WaitGroup) {
-
 	for c := range csvCh {
 		csvLine := c
 		wg2.Add(1)
@@ -34,7 +33,6 @@ func persistToCsvFile(csvCh chan []string, env *models.Env, wg2 *sync.WaitGroup)
 			wg2.Done()
 		}()
 	}
-
 }
 
 func processInputFile(csvCh chan []string, env *models.Env, wg *sync.WaitGroup) {

@@ -1,3 +1,3 @@
-package html_test
+package memory_test
 
 //TODO: implement testing
