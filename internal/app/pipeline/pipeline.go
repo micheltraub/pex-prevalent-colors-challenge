@@ -22,11 +22,14 @@ func Run(env *models.Env) {
 }
 
 func persistToCsvFile(csvCh chan []string, env *models.Env, wg2 *sync.WaitGroup) {
+	filename := env.OUTPUT_PATH + env.CSV_OUTPUT_FILENAME
+	var appendCsv csv.AppendCsv
 	for c := range csvCh {
 		csvLine := c
 		wg2.Add(1)
 		go func() {
-			err := csv.AppendToCsvFile(env.OUTPUT_PATH+env.CSV_OUTPUT_FILENAME, csvLine)
+			appendCsv = csv.NewAppendCsvImpl(filename, csvLine)
+			err := appendCsv.AppendToCsvFile()
 			if err != nil {
 				log.Println(err)
 			}

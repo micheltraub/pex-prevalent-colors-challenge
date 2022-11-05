@@ -8,19 +8,39 @@ import (
 	"os"
 )
 
-func AppendToCsvFile(filename string, data []string) error {
-	log.Println("💾 Appending line: ", data, "to", filename)
-	if len(data) == 0 {
+type AppendCsv interface {
+	AppendToCsvFile() error
+	OpenFileToAppend() error
+	AppendToOsFile() error
+}
+
+type AppendCsvImpl struct {
+	filename string
+	data     []string
+	csvFile  io.WriteCloser
+}
+
+func NewAppendCsvImpl(filename string, data []string) AppendCsv {
+
+	return &AppendCsvImpl{
+		filename: filename,
+		data:     data,
+	}
+}
+
+func (a *AppendCsvImpl) AppendToCsvFile() error {
+	log.Println("💾 Appending line: ", a.data)
+	if len(a.data) == 0 {
 		return fmt.Errorf("🚧🚨 Empty data received")
 	}
-	csvFile, err := OpenFileToAppend(filename)
+	err := a.OpenFileToAppend()
 	if err != nil {
 		return err
 	}
-	defer csvFile.Close()
+	defer a.csvFile.Close()
 
 	//Append data to file.
-	err = AppendToOsFile(csvFile, data)
+	err = a.AppendToOsFile()
 	if err != nil {
 		return err
 	}
@@ -28,21 +48,22 @@ func AppendToCsvFile(filename string, data []string) error {
 	return nil
 }
 
-func OpenFileToAppend(filename string) (io.WriteCloser, error) {
+func (a *AppendCsvImpl) OpenFileToAppend() error {
 	//Open CSV file to append. Create new file if does not exist.
-	csvFile, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	csvFile, err := os.OpenFile(a.filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
 	if err != nil {
-		return nil, fmt.Errorf("🚧🚨 Error opening file to append: " + err.Error())
+		return fmt.Errorf("🚧🚨 Error opening file to append: " + err.Error())
 	}
 
-	return csvFile, nil
+	a.csvFile = csvFile
+	return nil
 }
 
-func AppendToOsFile(csvFile io.Writer, data []string) error {
+func (a *AppendCsvImpl) AppendToOsFile() error {
 	//Append data to file.
-	csvwriter := csv.NewWriter(csvFile)
-	err := csvwriter.Write(data)
+	csvwriter := csv.NewWriter(a.csvFile)
+	err := csvwriter.Write(a.data)
 	if err != nil {
 		return fmt.Errorf("🚧🚨 Error writting to file: " + err.Error())
 	}
