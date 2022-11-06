@@ -87,3 +87,26 @@ func (s *accuratePrevalentColorTestSuite) Test_CalculatePrevalentColors() {
 	s.Equal("-", c2)
 	s.Equal("-", c3)
 }
+
+func (s *accuratePrevalentColorTestSuite) Test_ShouldDownscale() {
+	d := s.PrevalentColor.ShouldDownscale(s.mockImage.Bounds())
+	s.Equal(d, false)
+}
+
+func (s *accuratePrevalentColorTestSuite) Test_ShouldDownscale_Smaller() {
+	s.PrevalentColor = accurateprevalent.NewAccuratePrevalentColor("https://www.google.com", "Color1", "-", "-", true)
+	d := s.PrevalentColor.ShouldDownscale(s.mockImage.Bounds())
+	s.Equal(d, false)
+}
+
+func (s *accuratePrevalentColorTestSuite) Test_ShouldDownscale_Bigger() {
+	s.PrevalentColor = accurateprevalent.NewAccuratePrevalentColor("https://www.google.com", "Color1", "-", "-", true)
+	d := s.PrevalentColor.ShouldDownscale(
+		image.Rect(
+			0,
+			0,
+			600,
+			600))
+
+	s.Equal(d, true)
+}

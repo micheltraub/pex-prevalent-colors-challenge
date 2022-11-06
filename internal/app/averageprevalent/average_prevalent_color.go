@@ -72,3 +72,8 @@ func (accurate *averagePrevalentColor) GetCalculatedPrevalentColors() (string, s
 func (accurate *averagePrevalentColor) SortTopColors(m map[string]int, s string) {
 	log.Println("⚠️ Not implemented yet")
 }
+
+func (accurate *averagePrevalentColor) ShouldDownscale(bound image.Rectangle) bool {
+	log.Println("⚠️ Not implemented yet")
+	return false
+}

@@ -50,3 +50,8 @@ func (s *averagePrevalentColorTestSuite) Test_CalculatePrevalentColors() {
 	err := s.PrevalentColor.CalculatePrevalentColors(s.mockImage)
 	s.Equal(nil, err)
 }
+
+func (s *averagePrevalentColorTestSuite) Test_ShouldDownscale() {
+	d := s.PrevalentColor.ShouldDownscale(s.mockImage.Bounds())
+	s.Equal(false, d)
+}

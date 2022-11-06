@@ -40,6 +40,9 @@ func (m *mockPrevalentColor) GetCalculatedPrevalentColors() (string, string, str
 }
 func (m *mockPrevalentColor) SortTopColors(ma map[string]int, s string) {
 }
+func (m *mockPrevalentColor) ShouldDownscale(image.Rectangle) bool {
+	return false
+}
 
 type mockPrevalentColorFetchError struct {
 	URL    string
@@ -65,6 +68,10 @@ func (m *mockPrevalentColorFetchError) GetCalculatedPrevalentColors() (string, s
 func (m *mockPrevalentColorFetchError) SortTopColors(ma map[string]int, s string) {
 }
 
+func (m *mockPrevalentColorFetchError) ShouldDownscale(image.Rectangle) bool {
+	return false
+}
+
 type mockPrevalentColorCalculatingError struct {
 	URL    string
 	Color1 string
@@ -87,6 +94,9 @@ func (m *mockPrevalentColorCalculatingError) GetCalculatedPrevalentColors() (str
 	return m.Color1, m.Color2, m.Color3
 }
 func (m *mockPrevalentColorCalculatingError) SortTopColors(ma map[string]int, s string) {
+}
+func (m *mockPrevalentColorCalculatingError) ShouldDownscale(image.Rectangle) bool {
+	return false
 }
 
 func (s *prevalentColorsSuite) SetupTest() {

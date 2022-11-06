@@ -17,6 +17,7 @@ type Env struct {
 	HTML_TEMPLATE_FILENAME string
 	INPUT_FILENAME         string
 	INPUT_PATH             string
+	MEMORY_LIMIT           string
 	OUTPUT_PATH            string
 	PREVALENT_MODE         string
 	DOWNSCALE_IMAGES       string
@@ -42,5 +43,6 @@ func NewEnv() *Env {
 		DOWNSCALE_IMAGES:       os.Getenv("DOWNSCALE_IMAGES"),
 		PREVALENT_MODE:         os.Getenv("PREVALENT_MODE"),
 		GENERATE_HTML:          os.Getenv("GENERATE_HTML"),
+		MEMORY_LIMIT:           os.Getenv("MEMORY_LIMIT"),
 	}
 }
