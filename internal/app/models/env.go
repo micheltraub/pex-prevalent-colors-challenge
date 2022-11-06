@@ -19,7 +19,7 @@ type Env struct {
 	INPUT_PATH             string
 	OUTPUT_PATH            string
 	PREVALENT_MODE         string
-	REDUCE_IMAGES          string
+	DOWNSCALE_IMAGES       string
 }
 
 func NewEnv() *Env {
@@ -39,7 +39,7 @@ func NewEnv() *Env {
 		ENABLE_CPU_MONITOR:     os.Getenv("ENABLE_CPU_MONITOR"),
 		CPU_PPROF_FILENAME:     os.Getenv("CPU_PPROF_FILENAME"),
 		ENABLE_MEMORY_MONITOR:  os.Getenv("ENABLE_MEMORY_MONITOR"),
-		REDUCE_IMAGES:          os.Getenv("REDUCE_IMAGES"),
+		DOWNSCALE_IMAGES:       os.Getenv("DOWNSCALE_IMAGES"),
 		PREVALENT_MODE:         os.Getenv("PREVALENT_MODE"),
 		GENERATE_HTML:          os.Getenv("GENERATE_HTML"),
 	}

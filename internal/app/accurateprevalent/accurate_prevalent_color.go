@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 	"pex-prevalent-colors-challenge/internal/app/helpers"
-	"pex-prevalent-colors-challenge/internal/app/models"
+	"pex-prevalent-colors-challenge/pkg/prevalentcolors"
 	"sort"
 
 	"github.com/nfnt/resize"
@@ -14,20 +14,20 @@ import (
 
 // - accuratePrevalentColor: Get the exact 3 pixels that appears the most
 type AccuratePrevalentColor struct {
-	URL    string
-	Color1 string
-	Color2 string
-	Color3 string
-	Reduce bool
+	URL       string
+	Color1    string
+	Color2    string
+	Color3    string
+	Downscale bool
 }
 
-func NewAccuratePrevalentColor(url string, color1 string, color2 string, color3 string, reduce bool) models.PrevalentColor {
+func NewAccuratePrevalentColor(url string, color1 string, color2 string, color3 string, downscale bool) prevalentcolors.PrevalentColor {
 	return &AccuratePrevalentColor{
-		URL:    url,
-		Color1: color1,
-		Color2: color2,
-		Color3: color3,
-		Reduce: reduce,
+		URL:       url,
+		Color1:    color1,
+		Color2:    color2,
+		Color3:    color3,
+		Downscale: downscale,
 	}
 }
 
@@ -55,7 +55,7 @@ func (accurate *AccuratePrevalentColor) CalculatePrevalentColors(img image.Image
 	log.Println("🧑‍💻 Calculating prevalent color")
 	//Reducing the size of the image with interpolation makes the pixels counting faster,
 	//consuming less memory but less accurate. Diving by 5 the width andk eeping the ratio
-	if accurate.Reduce {
+	if accurate.Downscale {
 		img = resize.Resize(uint(img.Bounds().Max.X)/5, 0, img, resize.Lanczos3)
 	}
 	//count the pixels by hex code in map

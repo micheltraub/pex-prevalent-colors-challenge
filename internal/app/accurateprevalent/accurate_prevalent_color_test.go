@@ -4,7 +4,7 @@ import (
 	"image"
 	"image/color"
 	"pex-prevalent-colors-challenge/internal/app/accurateprevalent"
-	"pex-prevalent-colors-challenge/internal/app/models"
+	"pex-prevalent-colors-challenge/pkg/prevalentcolors"
 	"testing"
 
 	"github.com/stretchr/testify/suite"
@@ -13,7 +13,7 @@ import (
 type accuratePrevalentColorTestSuite struct {
 	suite.Suite
 	URL            string
-	PrevalentColor models.PrevalentColor
+	PrevalentColor prevalentcolors.PrevalentColor
 	mockImage      image.Image
 }
 

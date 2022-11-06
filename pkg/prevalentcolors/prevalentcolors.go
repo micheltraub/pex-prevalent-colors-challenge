@@ -6,10 +6,17 @@ import (
 	"image/jpeg"
 	"image/png"
 	"log"
-	"pex-prevalent-colors-challenge/internal/app/models"
 )
 
-func ProcessPrevalentColors(p models.PrevalentColor, csvCh chan []string) {
+type PrevalentColor interface {
+	FetchImage() (image.Image, error)
+	CalculatePrevalentColors(image.Image) error
+	GetCalculatedPrevalentColors() (string, string, string)
+	GetUrl() string
+	SortTopColors(map[string]int, string)
+}
+
+func ProcessPrevalentColors(p PrevalentColor, csvCh chan []string) {
 	// Todo: Handle invalid formats
 	image.RegisterFormat("jpeg", "jpeg", jpeg.Decode, jpeg.DecodeConfig)
 	image.RegisterFormat("png", "png", png.Decode, png.DecodeConfig)

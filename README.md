@@ -6,9 +6,9 @@
 - [PEX: Prevalent Colors Challenge](#pex-prevalent-colors-challenge)
   - [Running the application](#running-the-application)
   - [Challenge description](#challenge-description)
-    - [The first part of the challenge description says:](#the-first-part-of-the-challenge-description-says)
+    - [First challenge requirement:](#first-challenge-requirement)
       - [Proposed solution](#proposed-solution)
-    - [The second part of the challenge description says:](#the-second-part-of-the-challenge-description-says)
+    - [Second challenge requirement:](#second-challenge-requirement)
       - [Proposed solution](#proposed-solution-1)
   - [Results](#results)
 
@@ -24,11 +24,11 @@ go run cmd/app/main.go
 ---
 ## Challenge description
 
-### The first part of the challenge description says:
+### First challenge requirement:
 >Below is a list of links leading to an image. Read this list of images and find the 3 most prevalent colors in the RGB scheme in >hexadecimal format (#000000 - #FFFFFF) for each image, then write the result into a CSV file in the form of url,color,color,color.
 
 #### Proposed solution
-To configure the input location, the input filename, the output location, and the output filename you can change the `.Env` file modifying the following default values:
+To configure the input location, the input filename, the output location, and the output filename you can change the `.env` file modifying the following default values:
 
 ```dosini
 #INPUT Location
@@ -39,37 +39,38 @@ INPUT_FILENAME=input1000.txt
 OUTPUT_PATH=./out/
 CSV_OUTPUT_FILENAME=colors_output.csv
 ```
+The application exposes two different strategies to calculate the 3 most prevalent colors:
 
-To calculate the 3 most prevalent colors the system provides an *interface* [`prevalentcolor`] because we can get that result using different approaches.
-The following approches are:
-- The **accurate** one, that counts the HEX code of all colors and shows the 3 that repeats the most.
-- The **average** one, that uses `KMeans clustering` to calculate the prevalent colors (TODO: not implemented yet)
+- **ACCURATE**: counts the HEX code of all colors in an image, and shows the 3 that repeats the most.
+- **AVERAGE**: uses *k-means clustering* to calculate the prevalent colors (TODO: not implemented yet)
 
-To change the approach you can set in the `.Env` file changing the following:
+Internally, this has been achieved by defining a `PrevalentColor` *interface* with one implementation per strategy.
+
+To change the calculation strategy you can edit the `.env` file, changing the following:
 ```dosini
 #Calculating prevalent colors mode: ACCURATE or AVERAGE
 PREVALENT_MODE=ACCURATE
 ```
-To better perform, specially with big images, we can reduce the images before calculating the prevalent colors. Doing that makes it faster but less accurate, even that we use interpolation to keep the ratio. To set the config to reduce the image, in the `.Env` file:
+To better performance (especially when processing larger images), it's possible to downscale the images before calculating the prevalent colors. Enabling this optimizes processing speed. However, even though the colors ratio is maintained after downscaling, the accuracy may be affected. This can be enabled with the `DOWNSCALE_IMAGES` flag in the `.env` file:
 ```dosini
 #Reducing image improve performance but lose accuracy
-REDUCE_IMAGES=true
+DOWNSCALE_IMAGES=true
 ```
-### The second part of the challenge description says:
+### Second challenge requirement:
 >Please focus on speed and resources. The solution should be able to handle input files with more than a billion URLs using limited >resources (e.g., 1 CPU, 512MB RAM). Keep in mind that there is no limit on the execution time, but make sure you are utilizing the >provided resources as much as possible at any time during the program execution. 
 
 #### Proposed solution
-The application is focused on speed. So the pipeline used allows for every *URL* in the input file, the application runs a **goroutine** to fetch and calculate the 3 most prevalent colors of that image. Those are running in parallel and sending the results  The result is sent to the `csvLine channel`. 
+For every input *URL*, a `goroutine` is spawned to execute a processing *pipeline* that fetches the image, and that calculates the 3 most prevalent colors from it. Using **goroutines** allows concurrent processing, and the results are sent to a `csvLine` **channel**. The values received through that channel are written to a CSV file.
 
-In parallel, the application runs **goroutines** to read the `csvLine channel` and append to the output CSV file
+This approach leverages *concurrent processing* through the use of goroutines, allowing faster processing. However, this uses all the available resources.
 
-This approach is the fastes but will use all the resources available. Below some **CPU** and **memory** usage.
+Below some **CPU** and **memory** usage.
 
 ---
 
 ## Results
 
-To enable **CPU** and **memory** monitoring, set the following variables in the `.Env` file:
+To enable **CPU** and **memory** monitoring, set the following variables in the `.env` file:
 ```dosini
 #MONITORING for performance
 ENABLE_CPU_MONITOR=true
@@ -78,7 +79,7 @@ CPU_PPROF_FILENAME=cpu.pprof
 ```
 
 Processing `test/data/input1000.txt`: 
-- With `REDUCE_IMAGES` set to **true**:
+- With `DOWNSCALE_IMAGES` set to **true**:
   - Memory usage: 
   ```dosini
     2022/11/03 23:32:33 Process took 2m0.7072298s
@@ -113,7 +114,7 @@ Processing `test/data/input1000.txt`:
             0     0% 98.15%     55.85s  0.81%  image.Decode
             0     0% 98.15%     37.34s  0.54%  image/jpeg.Decode
     ```
-- With `REDUCE_IMAGES` set to **false**:
+- With `DOWNSCALE_IMAGES` set to **false**:
     - Memory usage: 
     ```dosini
     022/11/03 23:46:28 Process took 5m59.3611309s
@@ -168,8 +169,9 @@ As I am new in GO I had to learn many things, so I didnt had the time to do all 
 ---
 ## Extra
 ### Converting CSV result into HTML
-The app has the capability to convert the CSV result into a static HTML file, to give a visual prefiew of the imagens and colors.
-By default its already enabled. You can change the configs in the `.Env` file modifying the following:
+The app has the capability to convert the *CSV* result into a static *HTML* file, to give a visual preview of the imagens and prevalent colors.
+
+By default its already enabled. You can change the configs in the `.env` file modifying the following:
 ```shell
 GENERATE_HTML=true
 HTML_TEMPLATE_FILENAME=./web/templates/result.tmpl

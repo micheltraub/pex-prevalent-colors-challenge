@@ -3,7 +3,6 @@ package prevalentcolors_test
 import (
 	"fmt"
 	"image"
-	"pex-prevalent-colors-challenge/internal/app/models"
 	"pex-prevalent-colors-challenge/pkg/prevalentcolors"
 	"testing"
 
@@ -14,7 +13,7 @@ import (
 
 type prevalentColorsSuite struct {
 	suite.Suite
-	PrevalentColor models.PrevalentColor
+	PrevalentColor prevalentcolors.PrevalentColor
 	csvCh          chan []string
 }
 

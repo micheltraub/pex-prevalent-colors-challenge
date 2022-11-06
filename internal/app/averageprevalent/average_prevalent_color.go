@@ -3,26 +3,26 @@ package averageprevalent
 import (
 	"image"
 	"log"
-	"pex-prevalent-colors-challenge/internal/app/models"
+	"pex-prevalent-colors-challenge/pkg/prevalentcolors"
 )
 
 //   - averagePrevalentColor: Get the 3 pixels that appears the most using KMeansClustering
 //     Reference: https://en.wikipedia.org/wiki/K-means_clustering
 type averagePrevalentColor struct {
-	URL    string
-	Color1 string
-	Color2 string
-	Color3 string
-	Reduce bool
+	URL       string
+	Color1    string
+	Color2    string
+	Color3    string
+	Downscale bool
 }
 
-func NewAveragePrevalentColor(url string, color1 string, color2 string, color3 string, reduce bool) models.PrevalentColor {
+func NewAveragePrevalentColor(url string, color1 string, color2 string, color3 string, downscale bool) prevalentcolors.PrevalentColor {
 	return &averagePrevalentColor{
-		URL:    url,
-		Color1: color1,
-		Color2: color2,
-		Color3: color3,
-		Reduce: reduce,
+		URL:       url,
+		Color1:    color1,
+		Color2:    color2,
+		Color3:    color3,
+		Downscale: downscale,
 	}
 }
 

@@ -39,9 +39,9 @@ func persistToCsvFile(csvCh chan []string, env *models.Env, wg2 *sync.WaitGroup)
 }
 
 func processInputFile(csvCh chan []string, env *models.Env, wg *sync.WaitGroup) {
-	reduce := false
-	if env.REDUCE_IMAGES == "true" {
-		reduce = true
+	downscale := false
+	if env.DOWNSCALE_IMAGES == "true" {
+		downscale = true
 	}
 
 	accurateMode := false
@@ -66,7 +66,7 @@ func processInputFile(csvCh chan []string, env *models.Env, wg *sync.WaitGroup) 
 			continue
 		}
 		go func() {
-			processLine(csvCh, imgUrl, reduce, accurateMode)
+			processLine(csvCh, imgUrl, downscale, accurateMode)
 			wg.Done()
 		}()
 
@@ -78,12 +78,12 @@ func processInputFile(csvCh chan []string, env *models.Env, wg *sync.WaitGroup) 
 	close(csvCh)
 }
 
-func processLine(csvCh chan []string, imgUrl string, reduce bool, accurateMode bool) {
-	var prevalentColor models.PrevalentColor
+func processLine(csvCh chan []string, imgUrl string, downscale bool, accurateMode bool) {
+	var prevalentColor prevalentcolors.PrevalentColor
 	if accurateMode {
-		prevalentColor = accurateprevalent.NewAccuratePrevalentColor(imgUrl, "-", "-", "-", reduce)
+		prevalentColor = accurateprevalent.NewAccuratePrevalentColor(imgUrl, "-", "-", "-", downscale)
 	} else {
-		prevalentColor = averageprevalent.NewAveragePrevalentColor(imgUrl, "-", "-", "-", reduce)
+		prevalentColor = averageprevalent.NewAveragePrevalentColor(imgUrl, "-", "-", "-", downscale)
 	}
 	prevalentcolors.ProcessPrevalentColors(prevalentColor, csvCh)
 }

@@ -3,7 +3,7 @@ package averageprevalent_test
 import (
 	"image"
 	"pex-prevalent-colors-challenge/internal/app/averageprevalent"
-	"pex-prevalent-colors-challenge/internal/app/models"
+	"pex-prevalent-colors-challenge/pkg/prevalentcolors"
 	"testing"
 
 	"github.com/stretchr/testify/suite"
@@ -12,7 +12,7 @@ import (
 type averagePrevalentColorTestSuite struct {
 	suite.Suite
 	URL            string
-	PrevalentColor models.PrevalentColor
+	PrevalentColor prevalentcolors.PrevalentColor
 	mockImage      image.Image
 }
 
