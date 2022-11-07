@@ -14,6 +14,7 @@ type PrevalentColor interface {
 	GetCalculatedPrevalentColors() (string, string, string)
 	GetUrl() string
 	SortTopColors(map[string]int, string)
+	ShouldDownscale(image.Rectangle) bool
 }
 
 func ProcessPrevalentColors(p PrevalentColor, csvCh chan []string) {

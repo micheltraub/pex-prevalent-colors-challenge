@@ -1,0 +1,11 @@
+version: "2.2"
+
+services:
+  prevalent-colors:
+    build: .
+    container_name: prevalent_colors
+    cpus: 1
+    mem_limit: 512m
+    tty: true
+    volumes:
+      - ./out:/app/out

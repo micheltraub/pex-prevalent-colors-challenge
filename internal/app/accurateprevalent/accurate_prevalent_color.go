@@ -41,6 +41,7 @@ func (accurate *AccuratePrevalentColor) FetchImage() (image.Image, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Println("📡 Decoding image: ", accurate.URL)
 	img, filename, err := image.Decode(response.Body)
 	if err != nil {
 		log.Println("🚧🚨 Error decoding image: " + err.Error())
@@ -52,12 +53,18 @@ func (accurate *AccuratePrevalentColor) FetchImage() (image.Image, error) {
 }
 
 func (accurate *AccuratePrevalentColor) CalculatePrevalentColors(img image.Image) error {
-	log.Println("🧑‍💻 Calculating prevalent color")
-	//Reducing the size of the image with interpolation makes the pixels counting faster,
-	//consuming less memory but less accurate. Diving by 5 the width andk eeping the ratio
-	if accurate.Downscale {
-		img = resize.Resize(uint(img.Bounds().Max.X)/5, 0, img, resize.Lanczos3)
+	log.Println(fmt.Sprintf("🧑‍💻 Calculating prevalent color for: %v", accurate.GetUrl()))
+
+	//Reducing the size of the image with interpolation makes the pixel counting faster,
+	//consuming less memory, but less accurate.
+	if accurate.ShouldDownscale(img.Bounds()) {
+		if img.Bounds().Max.X > img.Bounds().Max.Y {
+			img = resize.Resize(512, 0, img, resize.Lanczos3)
+		} else {
+			img = resize.Resize(0, 512, img, resize.Lanczos3)
+		}
 	}
+
 	//count the pixels by hex code in map
 	m := make(map[string]int)
 	m["-"] = -1
@@ -83,8 +90,8 @@ func (accurate *AccuratePrevalentColor) SortTopColors(m map[string]int, hexPixel
 	if _, ok := top[hexPixel]; !ok {
 		top[hexPixel] = m[hexPixel]
 	}
-	//sort the top map
 
+	//sort the top map
 	keys := make([]string, 0, len(top))
 	for key := range top {
 		keys = append(keys, key)
@@ -110,4 +117,16 @@ func (accurate *AccuratePrevalentColor) GetCalculatedPrevalentColors() (string, 
 }
 func (accurate *AccuratePrevalentColor) GetUrl() string {
 	return accurate.URL
+}
+
+func (accurate *AccuratePrevalentColor) ShouldDownscale(bounds image.Rectangle) bool {
+	if !accurate.Downscale {
+		return false
+	}
+
+	if bounds.Max.X > 512 || bounds.Max.Y > 512 {
+		return true
+	}
+
+	return false
 }
