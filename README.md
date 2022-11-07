@@ -139,4 +139,4 @@ GENERATE_HTML=true
 HTML_TEMPLATE_FILENAME=./web/templates/result.tmpl
 HTML_OUTPUT_FILENAME=index.html
 ```
-When enabled, the HTML page should open automatically in the browser after the program ends.
+When enabled, the HTML page should open automatically in the browser after the program ends if running locally (not in Docker container).
