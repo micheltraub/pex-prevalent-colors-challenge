@@ -20,7 +20,7 @@
 ---
 
 ## Running the application
-This application can be launched with **Go 1.9**, locally:
+This application can be launched with **Go 1.19**, locally:
 ```shell
 go mod download 
 go run cmd/app/main.go
@@ -114,7 +114,7 @@ Processing `test/data/input100.txt`:
 *To get the CPU PPROF top10 information run: `go tool pprof cpu.pprof` and after that `top10`
 
 ## Improvements
-As I am new in GO I had to learn many things, so I didnt had the time to do all that I wanted to do. So my goal was to apply some concepts that I know but are important but there are many things that are incomplete or that could be improved. Here is a list of things that I would do:
+As I am new to Go, I had to learn many things while working on this challenge. Unfortunately, I didn't have enough time to complete everything I wanted. So I focused on applying and implementing some core concepts that I thought were important. However, I'm aware many things could be improved:
 
 - Implement the average prevalent color calcuation using KMeans Clustering
 - Limit the number of goroutines using things like runtime.NumCPU() and concurrency best practices (https://go.dev/blog/pipelines)
