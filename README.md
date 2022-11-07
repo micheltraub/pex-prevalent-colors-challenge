@@ -100,7 +100,7 @@ Processing `test/data/input100.txt`:
 | Downscale | Process time | Memory | *CPU | 
 |--|:-------------:|:-------------:|:-------------:| 
 | true  |  Process took 18.3562713s  | ![Downscale Local Memory - 100](doc/readme/memory_loc_100_d.jpg) | ![Downscale Local CPU - 100](doc/readme/cpu_loc_100_d.jpg) | 
-| false | Process took 2m47.0733879s | ![Local Memory - 100](doc/readme/memory_loc_100.jpg) | ![Local CPU - 100](doc/readme/cpu_loc_100_.jpg) | 
+| false | Process took 2m47.0733879s | ![Local Memory - 100](doc/readme/memory_loc_100.jpg) | ![Local CPU - 100](doc/readme/cpu_loc_100.jpg) | 
 
 ### Running on Docker container (1 CPU and 512 MB)
 
@@ -109,7 +109,7 @@ Processing `test/data/input100.txt`:
 | Downscale | Process time | Memory | *CPU | 
 |--|:-------------:|:-------------:|:-------------:| 
 | true  |   Process took 33.9286117s  | ![Downscale Docker Memory - 100](doc/readme/memory_doc_100_d.jpg) | ![Downscale Docker CPU - 100](doc/readme/cpu_doc_100_d.jpg) | 
-| false |  Process took 2m58.2547825s | ![Docker Memory - 100](doc/readme/memory_doc_100.jpg) | ![Docker CPU - 100](doc/readme/cpu_doc_100_.jpg) | 
+| false |  Process took 2m58.2547825s | ![Docker Memory - 100](doc/readme/memory_doc_100.jpg) | ![Docker CPU - 100](doc/readme/cpu_doc_100.jpg) | 
 
 *To get the CPU PPROF top10 information run: `go tool pprof cpu.pprof` and after that `top10`
 
