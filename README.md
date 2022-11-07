@@ -20,10 +20,15 @@
 ---
 
 ## Running the application
-This application can be launched with **Go**, run:
+This application can be launched with **Go 1.9**, locally:
 ```shell
 go mod download 
 go run cmd/app/main.go
+```
+
+or using Docker compose:
+```shell
+docker-compose up --build --attach prevalent-colors
 ```
 
 ---
